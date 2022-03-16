@@ -19,6 +19,9 @@ public class InvoiceDocument
         this.invoiceDate = invoiceDate;
     }
 
+    //used for json serialization
+    public InvoiceDocument()
+    { }
 
     public String getLastName()
     {
