@@ -37,13 +37,15 @@ Sends a message to the connected TCP socket every 10 seconds.
 The container generates output logs. If you see messages like this, your container was started successfully.
 
 ### Startup
-- exercise01_vv_server    | Reading Environment Variables...
-- exercise01_vv_server    | JsonStoragePath: /var/exercise01/invoices/
-- exercise01_vv_server    | SocketURL: exercise01_vv_client
-- exercise01_vv_server    | SocketPort: 9020
+- exercise01_vv_server    | 2022-03-16 10:40:48.772  INFO bc41da9b2613 -- [           main] d.t.v.e.Exercise01ServerApplication      : Reading Environment Variables...
+- exercise01_vv_server    | 2022-03-16 10:40:48.777  INFO bc41da9b2613 -- [           main] d.t.v.e.Exercise01ServerApplication      : JsonStoragePath: /var/exercise01/invoices/
+- exercise01_vv_server    | 2022-03-16 10:40:48.777  INFO bc41da9b2613 -- [           main] d.t.v.e.Exercise01ServerApplication      : SocketURL: exercise01_vv_client
+- exercise01_vv_server    | 2022-03-16 10:40:48.778  INFO bc41da9b2613 -- [           main] d.t.v.e.Exercise01ServerApplication      : SocketPort: 9020
+- exercise01_vv_server    | 2022-03-16 10:40:48.778  INFO bc41da9b2613 -- [           main] d.t.v.e.Exercise01ServerApplication      : Check Startup Parameters for valid Values
+- exercise01_vv_server    | 2022-03-16 10:40:48.778  INFO bc41da9b2613 -- [           main] d.t.v.e.Exercise01ServerApplication      : Startup Parameter are valid -- Starting APP
 - ///other output -- spring boot
 
 ### Runtime Log Output
-- exercise01_vv_server    | Writing to Socket: {"firstName":"Peter","lastName":"Fricke","invoiceAmount":"11.65","invoiceDate":"2022-03-15 06:11:46"}
+- exercise01_vv_server    | 2022-03-16 10:41:09.195  INFO bc41da9b2613 -- [       Thread-0] d.t.v.e.s.InvoiceCreationService         : Writing to Socket: {"firstName":"Lennard","lastName":"Spöttel","invoiceAmount":"44.48","invoiceDate":"2022-03-16 10:40:59"}
 - 10 sec later
-- exercise01_vv_server    | Writing to Socket: {"firstName":"Friedrich","lastName":"Freisen","invoiceAmount":"7.28","invoiceDate":"2022-03-15 06:12:06"}
+- exercise01_vv_server    | 2022-03-16 10:41:29.247  INFO bc41da9b2613 -- [       Thread-0] d.t.v.e.s.InvoiceCreationService         : Writing to Socket: {"firstName":"Valentino","lastName":"Dienel","invoiceAmount":"15.67","invoiceDate":"2022-03-16 10:41:19"}
