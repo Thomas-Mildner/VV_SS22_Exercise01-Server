@@ -1,5 +1,8 @@
 # TCP Socket Server
 
+![example workflow](https://github.com/Thomas-Mildner/VV_SS22_Exercise01-Server/actions/workflows/docker-image.yml/badge.svg)
+
+
 ## Description
 
 Sends a message to the connected TCP socket every 10 seconds. 
