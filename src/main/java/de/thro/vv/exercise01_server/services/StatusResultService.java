@@ -12,6 +12,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -47,7 +48,9 @@ public class StatusResultService
     {
         try
         {
-            return new ObjectMapper().readValue(Paths.get(file.toUri()).toFile(), InvoiceDocument.class);
+            var mapper = new ObjectMapper();
+            mapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"));
+            return mapper.readValue(Paths.get(file.toUri()).toFile(), InvoiceDocument.class);
         } catch (IOException e)
         {
             LOGGER.error(e);
