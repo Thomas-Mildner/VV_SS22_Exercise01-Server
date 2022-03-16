@@ -1,10 +1,15 @@
 package de.thro.vv.exercise01_server.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import de.thro.vv.exercise01_server.models.InvoiceDocument;
+import de.thro.vv.exercise01_server.models.StatusResult;
 import de.thro.vv.exercise01_server.services.ConfigurationService;
 import de.thro.vv.exercise01_server.services.StatusResultService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @RestController
@@ -16,18 +21,20 @@ public class StatusResultController
     }
 
     @GetMapping("/result")
-    public String checkStatusResult(){
+    public StatusResult checkStatusResult(){
         var statusResultService = new StatusResultService();
-        List<String> result = statusResultService.checkForJsonFile();
+        var mapper = new ObjectMapper();
+        mapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"));
+        var result = new StatusResult();
+        List<InvoiceDocument> invoiceDocuments = statusResultService.checkForJsonFile();
 
-        if((long) result.size() == 0){
-            return "No Json File found";
+        if((long) invoiceDocuments.size() == 0){
+            result.setMessage("No Documents found");
+            return result;
         }
 
-        StringBuilder sb = new StringBuilder();
-        for(var s : result){
-            sb.append(String.format("%s %s", s, System.lineSeparator()));
-        }
-        return String.format("Data successfully read: %s", sb);
+        result.setMessage("Data successfully read");
+        result.setInvoiceDocuments(invoiceDocuments);
+        return result;
     }
 }

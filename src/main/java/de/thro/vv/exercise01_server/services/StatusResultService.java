@@ -27,15 +27,15 @@ public class StatusResultService
         this.filePath = ConfigurationService.readEnvironmentVariable(ConfigurationService.JSON_STORAGE_PATH);
     }
 
-    public List<String> checkForJsonFile()
+    public List<InvoiceDocument> checkForJsonFile()
     {
-        List<String> invoiceDocuments = new ArrayList<>();
+        List<InvoiceDocument> invoiceDocuments = new ArrayList<>();
         try (Stream<Path> paths = Files.walk(Paths.get(filePath)))
         {
             paths.filter(Files::isRegularFile).forEach(file -> {
                 var invoiceDocument = parseJsonFile(file);
                 if(invoiceDocument != null){
-                    invoiceDocuments.add(invoiceDocument.toString());
+                    invoiceDocuments.add(invoiceDocument);
                 }
             });
         } catch (Exception e) {
