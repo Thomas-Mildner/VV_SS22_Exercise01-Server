@@ -1,0 +1,21 @@
+version: "3.7"
+
+
+volumes:
+  json-volume:
+    driver: local
+
+services:
+  exercise01_vv_server:
+    container_name: exercise01_vv_server
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - JSON_STORAGE_PATH=/var/exercise01/invoices/
+      - SOCKET_HOST=localhost
+      - SOCKET_PORT=9000
+    volumes:
+      - json-volume:/var/exercise01/invoices/
+
+
