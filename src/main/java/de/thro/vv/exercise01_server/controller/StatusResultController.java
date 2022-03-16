@@ -1,5 +1,6 @@
 package de.thro.vv.exercise01_server.controller;
 
+import de.thro.vv.exercise01_server.services.ConfigurationService;
 import de.thro.vv.exercise01_server.services.StatusResultService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,7 +12,7 @@ public class StatusResultController
 {
     @GetMapping("/")
     public String home(){
-        return String.format("Server up and running - checking for new Json Files in Docker Volume mount: %s", System.getenv("JSON_STORAGE_PATH"));
+        return String.format("Server up and running - checking for new Json Files in Docker Volume mount: %s", ConfigurationService.readEnvironmentVariable(ConfigurationService.JSON_STORAGE_PATH));
     }
 
     @GetMapping("/result")

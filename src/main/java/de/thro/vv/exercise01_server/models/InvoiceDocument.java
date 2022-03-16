@@ -4,12 +4,21 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class JsonResult
+public class InvoiceDocument
 {
     String firstName;
     String lastName;
     String invoiceAmount;
     Date invoiceDate;
+
+    public InvoiceDocument(String firstName, String lastName, String invoiceAmount, Date invoiceDate)
+    {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.invoiceAmount = invoiceAmount;
+        this.invoiceDate = invoiceDate;
+    }
+
 
     public String getLastName()
     {

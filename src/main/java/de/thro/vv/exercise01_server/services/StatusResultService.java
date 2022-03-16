@@ -4,8 +4,9 @@ package de.thro.vv.exercise01_server.services;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import de.thro.vv.exercise01_server.models.JsonResult;
-import org.springframework.beans.factory.annotation.Value;
+import de.thro.vv.exercise01_server.models.InvoiceDocument;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -18,46 +19,39 @@ import java.util.stream.Stream;
 public class StatusResultService
 {
     private final String filePath;
+    private static final Logger LOGGER = LogManager.getLogger(StatusResultService.class);
 
     public StatusResultService()
     {
-        this.filePath = System.getenv("JSON_STORAGE_PATH");
+        this.filePath = ConfigurationService.readEnvironmentVariable(ConfigurationService.JSON_STORAGE_PATH);
     }
 
     public List<String> checkForJsonFile()
     {
-        List<String> results = new ArrayList<>();
+        List<String> invoiceDocuments = new ArrayList<>();
         try (Stream<Path> paths = Files.walk(Paths.get(filePath)))
         {
-            paths.filter(path -> Files.isRegularFile(path)).forEach(file -> {
-                var result = parseJsonFile(file);
-                if(result != null){
-                    results.add(result.toString());
+            paths.filter(Files::isRegularFile).forEach(file -> {
+                var invoiceDocument = parseJsonFile(file);
+                if(invoiceDocument != null){
+                    invoiceDocuments.add(invoiceDocument.toString());
                 }
             });
         } catch (Exception e) {
-            System.out.println(e.toString());
+            LOGGER.error(e);
         }
-        return results;
+        return invoiceDocuments;
     }
 
-    private JsonResult parseJsonFile(Path file)
+    private InvoiceDocument parseJsonFile(Path file)
     {
         try
         {
-            return new ObjectMapper().readValue(Paths.get(file.toUri()).toFile(), JsonResult.class);
-        } catch (JsonMappingException e)
-        {
-            System.out.println(e);
-        } catch (JsonParseException e)
-        {
-            System.out.println(e);
+            return new ObjectMapper().readValue(Paths.get(file.toUri()).toFile(), InvoiceDocument.class);
         } catch (IOException e)
         {
-            System.out.println(e);
+            LOGGER.error(e);
         }
         return null;
-
-
     }
 }

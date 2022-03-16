@@ -3,30 +3,33 @@ package de.thro.vv.exercise01_server.services;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.javafaker.Faker;
-import de.thro.vv.exercise01_server.models.JsonResult;
+import de.thro.vv.exercise01_server.models.InvoiceDocument;
+import de.thro.vv.exercise01_server.models.InvoiceDocumentBuilder;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
-public class InvoiceCreator
+public class InvoiceCreationService
 {
+    private static final Logger LOGGER = LogManager.getLogger(InvoiceCreationService.class);
+
     public void periodicallySendInvoices()
     {
         Thread t = new Thread(() ->
         {
-            String socketUrl = System.getenv("SOCKET_HOST");
-            int socketPort = Integer.parseInt(System.getenv("SOCKET_PORT"));
+            String socketUrl = ConfigurationService.readEnvironmentVariable(ConfigurationService.SOCKET_HOST);
+            int socketPort = Integer.parseInt(ConfigurationService.readEnvironmentVariable(ConfigurationService.SOCKET_PORT));
             while (true)
             {
-
                 String jsonString = generateInvoiceData();
                 try
                 {
@@ -34,12 +37,12 @@ public class InvoiceCreator
                     Socket s = new Socket(socketUrl, socketPort);
                     try (OutputStreamWriter out = new OutputStreamWriter(s.getOutputStream(), StandardCharsets.UTF_8))
                     {
-                        System.out.println(String.format("Writing to Socket: %s", jsonString));
+                        LOGGER.info(String.format("Writing to Socket: %s", jsonString));
                         out.write(jsonString);
                     }
                 } catch (IOException | InterruptedException e)
                 {
-                    System.out.println(e);
+                    LOGGER.error(e);
                 }
             }
         });
@@ -47,14 +50,16 @@ public class InvoiceCreator
 
     }
 
-    private String generateInvoiceData(){
+    private String generateInvoiceData()
+    {
 
-        Faker f = new Faker(new Locale("de"));
-        JsonResult j = new JsonResult();
-        j.setFirstName(f.name().firstName());
-        j.setLastName(f.name().lastName());
-        j.setInvoiceDate(Date.from(Instant.now()));
-        j.setInvoiceAmount(f.commerce().price());
+        Faker faker = new Faker(new Locale("de"));
+        InvoiceDocument j = new InvoiceDocumentBuilder()
+                .setFirstName(faker.name().firstName())
+                .setLastName(faker.name().lastName())
+                .setInvoiceDate(Date.from(Instant.now()))
+                .setInvoiceAmount(faker.commerce().price())
+                .createInvoiceDocument();
         try
         {
             var jsonGenerator = new ObjectMapper();
@@ -62,7 +67,7 @@ public class InvoiceCreator
             return jsonGenerator.writeValueAsString(j);
         } catch (JsonProcessingException e)
         {
-            System.out.println(e);
+            LOGGER.error(e);
         }
         return "";
     }
