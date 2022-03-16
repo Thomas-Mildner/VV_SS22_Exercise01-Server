@@ -37,12 +37,12 @@ Sends a message to the connected TCP socket every 10 seconds.
 The container generates output logs. If you see messages like this, your container was started successfully.
 
 ### Startup
-- exercise01_vv_server    | 2022-03-16 10:40:48.772  INFO bc41da9b2613 -- [           main] d.t.v.e.Exercise01ServerApplication      : Reading Environment Variables...
-- exercise01_vv_server    | 2022-03-16 10:40:48.777  INFO bc41da9b2613 -- [           main] d.t.v.e.Exercise01ServerApplication      : JsonStoragePath: /var/exercise01/invoices/
-- exercise01_vv_server    | 2022-03-16 10:40:48.777  INFO bc41da9b2613 -- [           main] d.t.v.e.Exercise01ServerApplication      : SocketURL: exercise01-vv-client
-- exercise01_vv_server    | 2022-03-16 10:40:48.778  INFO bc41da9b2613 -- [           main] d.t.v.e.Exercise01ServerApplication      : SocketPort: 9020
-- exercise01_vv_server    | 2022-03-16 10:40:48.778  INFO bc41da9b2613 -- [           main] d.t.v.e.Exercise01ServerApplication      : Check Startup Parameters for valid Values
-- exercise01_vv_server    | 2022-03-16 10:40:48.778  INFO bc41da9b2613 -- [           main] d.t.v.e.Exercise01ServerApplication      : Startup Parameter are valid -- Starting APP
+- exercise01-vv-server    | 2022-03-16 10:40:48.772  INFO bc41da9b2613 -- [           main] d.t.v.e.Exercise01ServerApplication      : Reading Environment Variables...
+- exercise01-vv-server    | 2022-03-16 10:40:48.777  INFO bc41da9b2613 -- [           main] d.t.v.e.Exercise01ServerApplication      : JsonStoragePath: /var/exercise01/invoices/
+- exercise01-vv-server    | 2022-03-16 10:40:48.777  INFO bc41da9b2613 -- [           main] d.t.v.e.Exercise01ServerApplication      : SocketURL: exercise01-vv-client
+- exercise01-vv-server    | 2022-03-16 10:40:48.778  INFO bc41da9b2613 -- [           main] d.t.v.e.Exercise01ServerApplication      : SocketPort: 9020
+- exercise01-vv-server    | 2022-03-16 10:40:48.778  INFO bc41da9b2613 -- [           main] d.t.v.e.Exercise01ServerApplication      : Check Startup Parameters for valid Values
+- exercise01-vv-server    | 2022-03-16 10:40:48.778  INFO bc41da9b2613 -- [           main] d.t.v.e.Exercise01ServerApplication      : Startup Parameter are valid -- Starting APP
 - ///other output -- spring boot
 
 ### Runtime Log Output
